@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {  useEffect, useState } from 'react'
@@ -95,6 +96,7 @@ interface  thongkexe {
 function App() {
   const [activeIndex] = useState([0, 1, 2, 3]);
   const [Total_Car, setTotal_Car] = useState(0);
+  // const [Total_Car_Read, setTotal_Car_Read] = useState(0);
   const [Total_Car_Unread, setTotal_Car_Unread] = useState(0);
   const [Total_Car_Read_Correct, setTotal_Car_Read_Correct] = useState(0);
   const [Total_Car_Read_Incorrect, setTotal_Car_Read_Incorrect] = useState(0);
@@ -110,18 +112,43 @@ function App() {
   duoi30.setDate(duoi30.getDate() - 29);
   const [startDate, setStartDate] = useState(new Date(new Date().getTime() - 24 * 60 * 60 * 1000));
 
+  // const data2 = [
+  //   // { name: "OK", value: Total_Car_Read_Percent, label: "READABLE", color: "#FF4500"  },
+  //   {
+  //     name: "OK",
+  //     value: parseFloat(((Total_Car_Unread / (Total_Car_Read + Total_Car_Unread)) * 100).toFixed(2)),
+  //     label: "UNREADABLE",
+  //     color: "#FF4500",
+  //   },
+  //   {
+  //     name: "OK",
+  //     value: parseFloat(
+  //       ((Total_Car_Read_Correct / Total_Car_Read ) * 100).toFixed(2)
+  //       ),
+  //     label: "CORRECT",
+  //     color: "#00FF02",
+  //   },
+  //   {
+  //     name: "OK",
+  //     value: parseFloat(
+  //       ((Total_Car_Read_Incorrect / Total_Car_Read ) * 100).toFixed(2)
+  //     ),
+  //     label: "INCORRECT",
+  //     color: "#FDF5E6",
+  //   },
+  // ];
   const data2 = [
     // { name: "OK", value: Total_Car_Read_Percent, label: "READABLE", color: "#FF4500"  },
     {
       name: "OK",
-      value: parseFloat(((Total_Car_Unread / Total_Car) * 100).toFixed(2)),
+      value: parseFloat(((Total_Car_Unread / ( Total_Car_Unread+Total_Car_Read_Correct+Total_Car_Read_Incorrect)) * 100).toFixed(2)),
       label: "UNREADABLE",
       color: "#FF4500",
     },
     {
       name: "OK",
       value: parseFloat(
-        ((Total_Car_Read_Correct / Total_Car) * 100).toFixed(2)
+        ((Total_Car_Read_Correct / ( Total_Car_Unread+Total_Car_Read_Correct+Total_Car_Read_Incorrect) ) * 100).toFixed(2)
         ),
       label: "CORRECT",
       color: "#00FF02",
@@ -129,13 +156,12 @@ function App() {
     {
       name: "OK",
       value: parseFloat(
-        ((Total_Car_Read_Incorrect / Total_Car) * 100).toFixed(2)
+        ((Total_Car_Read_Incorrect / ( Total_Car_Unread+Total_Car_Read_Correct+Total_Car_Read_Incorrect) ) * 100).toFixed(2)
       ),
       label: "INCORRECT",
       color: "#FDF5E6",
     },
   ];
-
 
   
   const GetData = async () => {
@@ -156,6 +182,7 @@ function App() {
       .then((response) => {
         setTotal_Car(response.data.Total_Car);
         setTotal_Car_Unread(response.data.Total_Car_Unread);
+        // setTotal_Car_Read(response.data.Total_Car_Read);
         setTotal_Car_Read_Correct(response.data.Total_Car_Read_Correct);
         setTotal_Car_Read_Incorrect(response.data.Total_Car_Read_Incorrect);
         setTotal_Car_In(response.data.Total_Car_In);
@@ -325,8 +352,11 @@ function App() {
 
       <div className="grid grid-rows-3 md:grid-rows-2 lg:grid-rows-1  grid-flow-col mt-12 gap-5 text-center">
         <div className="row_chart">
-          MONTH <br />
+
+     
+    
           <div className="contentchart">
+          MONTH <br />
           <ResponsiveContainer width='100%' height='300px' aspect={6.0/3.255}>
             <LineChart
               // width={460}
@@ -364,8 +394,8 @@ function App() {
           </div>
         </div>
         <div className="row_chart">
-          WEEK
           <div className="contentchart">
+          WEEK <br />
           <ResponsiveContainer width='100%' height='300px'  aspect={6.0/3.255}>
             <BarChart 
               data={data}
@@ -389,8 +419,8 @@ function App() {
           </div>
         </div>
         <div className="row_chart">
-          { getStartDateLabel(startDate) }
           <div className="contentchart">
+          { getStartDateLabel(startDate) } <br />
           <ResponsiveContainer width='100%' height='300px' aspect={6.0/3.455}>
             <PieChart >
               <Pie
