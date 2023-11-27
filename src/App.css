@@ -1,46 +1,112 @@
-
-body{
+body {
   height: 100vh;
   width: 100vw;
-  /* background-color: rgb(179, 179, 179); */
-  padding: 10px;
-  /* padding-right: 20px; */
+  padding-right: 20px;
   margin: 0;
   background: #000000;
-overflow-x: hidden;
-box-sizing: content-box;
-user-select: none;
-
+  overflow-x: hidden;
+  box-sizing: content-box;
+  user-select: none;
+  position: relative;
 }
-/* .body_card {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  background: #000000;
 
+.cuatrai {
+  color: aliceblue;
+  height: 100vh !important;
+  width: 50vw !important;
+  opacity: 1;
+  background-color: #000000;
+  top: 0;
+  left: 0%;
+  border-right: 1px solid #fff000;
+  position: absolute;
+  animation: cuatrai-open 2s forwards;
+  animation-play-state: running;
+}
 
-} */
-.react-datepicker__input-container input, .react-datepicker-wrapper {
+.cuaphai {
+  color: aliceblue;
+  height: 100vh !important;
+  width: 50vw !important;
+  opacity: 1;
+  left: 50%;
+  top: 0;
+  background-color: #000000;
+  border-left: 1px solid #fff000;
+  position: absolute;
+  animation: cuaphai-open 2s forwards;
+}
+
+@keyframes fade-in {
+  100% {
+    height: 100vh;
+    width: 100vw;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@keyframes cuatrai-open {
+  100% {
+    left: -50%;
+    width: 0;
+  }
+}
+
+@keyframes cuaphai-open {
+  100% {
+    left: 100%;
+    width: 0;
+  }
+}
+
+@keyframes show {
+  100% {
+    opacity: 1;
+  }
+}
+
+.react-datepicker__input-container input,
+.react-datepicker-wrapper {
   background-color: transparent !important;
   border: none;
 }
-input:focus{
+
+.react-datepicker__input-container input:focus {
   border: none;
   outline: none;
+
 }
-.react-datepicker__month-container, .react-datepicker-popper, .react-datepicker-popper{
+
+.react-datepicker__input-container input {
+  min-width: 200px !important;
+  width: 200px !important;
+  max-width: 100% !important;
+  box-sizing: content-box !important;
+  text-align: center !important;
+}
+
+.react-datepicker__month-container,
+.react-datepicker-popper,
+.react-datepicker-popper {
   z-index: 9999 !important;
+
 }
+
 .title {
   text-align: center;
   font-size: 30px;
   font-weight: 700;
   color: #fff000;
   position: relative;
-  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  opacity: 0;
+  animation: show 8s forwards;
 }
 
-.card_water {
+/* .card_water {
   position: relative;
   height: 120px;
   max-width: 120px;
@@ -99,15 +165,9 @@ input:focus{
   font-size: 30px;
   font-weight: 700;
   align-items: center;
-  /* padding: 30px; */
   top: 50%;
   left: 30%;
-
-}
-
-
-
-
+} */
 
 .ring {
   position: relative;
@@ -129,6 +189,8 @@ input:focus{
   text-transform: uppercase;
   text-shadow: 0 0 5px #fff000;
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  opacity: 0;
+  animation: show 8s forwards;
 }
 
 .ring:before {
@@ -150,103 +212,104 @@ input:focus{
 
 @keyframes animateC {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes animate {
   0% {
-      transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 
   100% {
-      transform: rotate(405deg);
+    transform: rotate(405deg);
   }
 }
-
-
 
 .row_chart::before,
-  .row_chart::after
-  {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
- 
-  }
+.row_chart::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  .row_chart {
-    position: relative;
-    width: 92%;
-    margin: auto;
-    border-radius: 3%;
-    color: #69ca62;
-    /* box-shadow: inset 0 0 0 1px rgba(105, 202, 98, 0.5); */
-  overflow: hidden;
-
-    /* background-color: #000000; */
-  }
-
-  .row_chart::before,
-  .row_chart::after {
-    content: "";
-    /* margin: 3%; */
-
-    width: 150%;
-    height: 50%;
-    left:-10%;
-    right:-10%;
-    top:10%;
-    /* border: 1px solid red; */
-    background-color: #fff000;
-  /* border-radius: 3% */
-  animation: rotateBorder 5s linear infinite;
-z-index: -99999;
-  }
-
-  .row_chart::before {
-    animation-delay: -10s;
-    
-  }
-  row_chart::after {
-   background: #000000;
-   z-index: 9999 !important;
-  }
-  @keyframes rotateBorder {
-    0% {
-      transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(90deg);
-    }
-    50% {
-      transform: rotate(180deg);
-    }
-    75% {
-      transform: rotate(270deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .contentchart{
-    /* margin-top: 10px; */
-    margin: 5px;
-    user-select: none;
-    background: #000000;
-    border: 1px solid green;
-    border-radius: 3%;
-
-  }
-
-.namecardcircle{
-  font-size: 0.6em;
 }
 
+.row_chart {
+  position: relative;
+  width: 92%;
+  margin: auto;
+  border-radius: 3%;
+  color: #69ca62;
+  overflow: hidden;
+  opacity: 0;
+  animation: show 8s forwards;
+}
+
+.row_chart::before,
+.row_chart::after {
+  content: "";
+  /* margin: 3%; */
+
+  width: 150%;
+  height: 50%;
+  left: -10%;
+  right: -10%;
+  top: 10%;
+  /* border: 1px solid red; */
+  background-color: #fff000;
+  /* border-radius: 3% */
+  animation: rotateBorder 5s linear infinite;
+  z-index: -99999;
+}
+
+.row_chart::before {
+  animation-delay: -10s;
+
+}
+
+row_chart::after {
+  background: #000000;
+  z-index: 9999 !important;
+}
+
+@keyframes rotateBorder {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(90deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(270deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.contentchart {
+  /* margin-top: 10px; */
+  margin: 5px;
+  user-select: none;
+  background: #000000;
+  border: 1px solid green;
+  border-radius: 3%;
+
+}
+
+.namecardcircle {
+  font-size: 0.6em;
+}
