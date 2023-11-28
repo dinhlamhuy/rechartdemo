@@ -16,6 +16,7 @@ body {
   width: 50vw !important;
   opacity: 1;
   background-color: #000000;
+  z-index: 999999999;
   top: 0;
   left: 0%;
   border-right: 1px solid #fff000;
@@ -32,6 +33,7 @@ body {
   left: 50%;
   top: 0;
   background-color: #000000;
+  z-index: 999999999;
   border-left: 1px solid #fff000;
   position: absolute;
   animation: cuaphai-open 2s forwards;
@@ -61,6 +63,9 @@ body {
 }
 
 @keyframes show {
+  0%{
+    opacity: 0;
+  }
   100% {
     opacity: 1;
   }
@@ -87,9 +92,10 @@ body {
 }
 
 .react-datepicker__month-container,
-.react-datepicker-popper,
-.react-datepicker-popper {
-  z-index: 9999 !important;
+.react-datepicker-popper, .react-datepicker{
+  z-index: 999999999 !important;
+
+  
 
 }
 
@@ -102,7 +108,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  opacity: 0;
+  opacity: 1;
   animation: show 8s forwards;
 }
 
@@ -189,8 +195,9 @@ body {
   text-transform: uppercase;
   text-shadow: 0 0 5px #fff000;
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-  opacity: 0;
+  opacity: 1;
   animation: show 8s forwards;
+  z-index: -1;
 }
 
 .ring:before {
@@ -247,8 +254,9 @@ body {
   border-radius: 3%;
   color: #69ca62;
   overflow: hidden;
-  opacity: 0;
+  opacity: 1;
   animation: show 8s forwards;
+  z-index: -1;
 }
 
 .row_chart::before,
