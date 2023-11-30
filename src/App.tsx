@@ -97,7 +97,7 @@ function App() {
   const [Total_Car_Lock, setTotal_Car_Lock] = useState(0)
   const [Total_Car_Week, setTotal_Car_Week] = useState<thongkexe[]>([])
   const [Total_Car_Month, setTotal_Car_Month] = useState<thongkexe[]>([])
-
+  const [Factory, setFactory] = useState(0)
   const [startDate, setStartDate] = useState(currentDate)
   const User_ID = localStorage.Login ? true : false
 
@@ -138,9 +138,9 @@ function App() {
       color: '#FDF5E6'
     }
   ]
-
+const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
   const GetData = async () => {
-    const url = 'http://192.168.32.65:6969/api/Statistical_All_iParking_System'
+    const url = mang[Factory]+'/api/Statistical_All_iParking_System'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -196,7 +196,7 @@ function App() {
     }
   }
   const GetDataWeek = async () => {
-    const url = 'http://192.168.32.65:6969/api/Statistical_All_iParking_System_Week'
+    const url = mang[Factory]+'/api/Statistical_All_iParking_System_Week'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -226,7 +226,7 @@ function App() {
       .finally(() => {})
   }
   const GetDataMonth = async () => {
-    const url = 'http://192.168.32.65:6969/api/Statistical_All_iParking_System_Week'
+    const url = mang[Factory]+'/api/Statistical_All_iParking_System_Week'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -263,6 +263,7 @@ function App() {
   // },[checkLogin]);
 
   useEffect(() => {
+    // console.log(mang[Factory])
     const fetchData = () => {
       GetData()
       GetDataWeek()
@@ -286,7 +287,8 @@ function App() {
     // console.log(startDate);
 
     return () => clearInterval(intervalId)
-  }, [startDate])
+
+  }, [startDate, Factory])
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
@@ -339,8 +341,11 @@ function App() {
         <div className='grid grid-rows-2  md:grid-rows-1 lg:grid-rows-1 grid-flow-col  justify-center gap-0 '>
           <div className='title   '>
             <button className='btn' onClick={handlelogout}>
-              DASHBROAD IPARKING{' '}
-            </button>
+              DASHBROAD IPARKING{' '} 
+            </button><select className=' ' value={Factory} onChange={(e:any) => setFactory(e.target.value)}>
+              <option  value={0}>LHG</option>
+                <option value={1}>JZS</option>
+              </select>
           </div>
           <div className='title p-0 m-0 '>
             <DatePicker
