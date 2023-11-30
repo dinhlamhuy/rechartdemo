@@ -9,6 +9,7 @@ body {
   user-select: none;
   position: relative;
 }
+
 select {
   padding: 5px;
   color: #000;
@@ -18,26 +19,36 @@ select {
   outline: none;
 
 }
+
 select option {
   margin: 40px;
   background: rgba(0, 0, 0, 0) !important;
   color: #fff000;
   /* text-shadow: 0 0px 0 rgba(0, 0, 0, 0.4) !important; */
 }
-option:focus{
+
+option:focus {
   background-color: transparent !important;
 
 }
+
 option:active {
-  
+
   background-color: transparent !important;
 }
-option:not(:checked) { background: #0000 !important; }
-option::checked { background: #0000 !important; }
+
+option:not(:checked) {
+  background: #0000 !important;
+}
+
+option::checked {
+  background: #0000 !important;
+}
+
 .cuatrai {
   color: aliceblue;
-  height: 100vh ;
-  width: 50vw ;
+  height: 100vh;
+  width: 50vw;
   opacity: 1;
   background-color: #000000;
   z-index: -9999990999999999999999999999999999999999999999999999999999999;
@@ -46,15 +57,15 @@ option::checked { background: #0000 !important; }
   left: 0%;
   border: 2px solid #fff000;
   position: absolute;
-    animation: cuaphai-open 2s forwards;
- 
+  animation: cuaphai-open 2s forwards;
+
   /* animation-play-state: running; */
 }
 
 .cuaphai {
   color: aliceblue;
-  height: 100vh ;
-  width: 50vw ;
+  height: 100vh;
+  width: 50vw;
   opacity: 1;
   right: 0%;
   top: 0;
@@ -63,8 +74,8 @@ option::checked { background: #0000 !important; }
   z-index: -9999990999999999999999999999999999999999999999999999999999999;
   border: 2px solid #fff000;
   position: absolute;
-   animation: cuatrai-open 2s forwards;
-    
+  animation: cuatrai-open 2s forwards;
+
   /* animation-play-state: running; */
   /* animation: cuaphai-open 2s forwards; */
 }
@@ -83,9 +94,11 @@ option::checked { background: #0000 !important; }
     /* left: 0%; */
     /* right: 0%; */
     width: 0vw;
-  
+
     /* opacity: 0; */
-  }100%{
+  }
+
+  100% {
     opacity: 0;
   }
 }
@@ -95,17 +108,20 @@ option::checked { background: #0000 !important; }
     /* left: 0%; */
     /* right: 0%; */
     width: 0vw;
-  
+
     /* opacity: 0; */
-  }100%{
+  }
+
+  100% {
     opacity: 0;
   }
 }
 
 @keyframes show {
-  0%{
+  0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -132,10 +148,11 @@ option::checked { background: #0000 !important; }
 }
 
 .react-datepicker__month-container,
-.react-datepicker-popper, .react-datepicker{
+.react-datepicker-popper,
+.react-datepicker {
   z-index: 999999999 !important;
 
-  
+
 
 }
 
@@ -360,4 +377,88 @@ row_chart::after {
 
 .namecardcircle {
   font-size: 0.6em;
+}
+
+.cardMachine {
+  border: 2px solid #fff000;
+  height: 220px;
+  border-radius: 20% 0 0 0;
+  padding-top: 0;
+  /* box-shadow: 0 0 10px 2px #fff000; */
+  animation: show 8s forwards;
+}
+
+.cardMachine:nth-child(1),
+.cardMachine:nth-child(3),
+.cardMachine:nth-child(5),
+.cardMachine:nth-child(7) {
+  border: 3px solid orangered;
+
+  box-shadow: 0 0 20px 3px orangered;
+}
+
+.cardMachine:nth-child(2),
+.cardMachine:nth-child(4),
+.cardMachine:nth-child(6),
+.cardMachine:nth-child(8) {
+  border: 2px solid #fff000;
+
+  box-shadow: 0 0 10px 2px #fff000;
+}
+
+
+
+.cardMachine:nth-child(1) .cardName,
+.cardMachine:nth-child(3) .cardName,
+.cardMachine:nth-child(5) .cardName,
+.cardMachine:nth-child(7) .cardName {
+  border-right: 3px solid orangered;
+  border-bottom: 3px solid orangered;
+  box-shadow: 0 0 20px 3px orangered;
+  color:orangered;
+  /* height: 10000px; */
+}
+
+.cardMachine:nth-child(2) .cardName,
+.cardMachine:nth-child(4) .cardName,
+.cardMachine:nth-child(6) .cardName,
+.cardMachine:nth-child(8) .cardName {
+  border-right: 2px solid #fff000;
+  border-bottom: 2px solid #fff000;
+  box-shadow: 0 0 10px 2px #fff000;
+  color:#fff000;
+  /* height: 10000px; */
+}
+
+.cardName {
+  /* border-right: 2px solid #fff000; */
+  /* border-bottom: 2px solid #fff000; */
+  /* color: #fff000; */
+  width: 40%;
+  height: 30%;
+  border-radius: 50% 0 20% 0;
+  margin-top: 0;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  font-weight: 800;
+  font-size: 25px;
+  letter-spacing: 3px;
+
+}
+
+.cardContent {
+  color: #fff000;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  /* border: 2px solid #fff000; */
+  height: 70%;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px 2px red;
+
 }

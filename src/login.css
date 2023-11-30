@@ -6,6 +6,7 @@
     box-sizing: border-box;
     display: flex;
     position: relative;
+  
 
 }
 
@@ -26,6 +27,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    
 }
 
 .SVGIMG img {
@@ -83,6 +85,7 @@
     border: 3px solid greenyellow;
     border-radius: 5%;
     overflow: hidden;
+    box-shadow: 0 0 20px 4px #fff000;
 
 }
 
@@ -108,6 +111,7 @@
         width: 60%;
         height: 60%;
         transform: rotateX(0deg) scale(1, 1);
+
         text-align: center;
     }
 
@@ -119,6 +123,7 @@
         height: 80%;
         text-align: center;
         transform: rotateX(0deg) scale(1, 1);
+
     }
 
     70% {
@@ -129,6 +134,7 @@
         opacity: 0.6;
         text-align: center;
         transform: rotateX(60deg) scale(1, 0.8);
+
     }
 
     100% {
@@ -138,6 +144,7 @@
         width: 50%;
         height: 50%;
         transform: rotateX(60deg) scale(1, 0.2);
+
         opacity: 1;
 
     }
@@ -169,7 +176,7 @@
         /* background-image: url('../public/fast.gif'); */
         background-image: url('../public/vongtron.gif');
         background-repeat: no-repeat;
-        background-size: 80%;
+        background-size: 300%;
         object-fit: cover;
         /* left:-90px; */
         background-position: center;

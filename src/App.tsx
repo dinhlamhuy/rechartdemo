@@ -10,9 +10,11 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import axios from 'axios'
 import {
+  Area,
   Bar,
   BarChart,
   CartesianGrid,
+  ComposedChart,
   Legend,
   Line,
   LineChart,
@@ -61,7 +63,7 @@ const renderActiveShape = (props: any) => {
         outerRadius={outerRadius + 12}
         // fill={fill}
         fill={payload.color}
-        // fill="none"
+      // fill="none"
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
@@ -79,10 +81,16 @@ interface thongkexe {
   K_Chinh_Xac: string
   K_Doc_Duoc: string
 }
+
+
+
+
 const duoi30 = new Date()
 duoi30.setDate(duoi30.getDate() - 29)
 const currentDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
 function App() {
+
+
   const [activeIndex] = useState([0, 1, 2])
   const [Total_Car, setTotal_Car] = useState(0)
   // const [Total_Car_Read, setTotal_Car_Read] = useState(0);
@@ -106,6 +114,51 @@ function App() {
   let retryCountweek = 0
   let retryCountmonth = 0
   const retryDelay = 120000 //2 phút
+  const datak = [
+    {
+      name: "Page A",
+      uv: 590,
+      pv: 800,
+      amt: 1400,
+      cnt: 490
+    },
+    {
+      name: "Page B",
+      uv: 868,
+      pv: 967,
+      amt: 1506,
+      cnt: 590
+    },
+    {
+      name: "Page C",
+      uv: 1397,
+      pv: 1098,
+      amt: 989,
+      cnt: 350
+    },
+    {
+      name: "Page D",
+      uv: 1480,
+      pv: 1200,
+      amt: 1228,
+      cnt: 480
+    },
+    {
+      name: "Page E",
+      uv: 1520,
+      pv: 1108,
+      amt: 1100,
+      cnt: 460
+    },
+    {
+      name: "Page F",
+      uv: 1400,
+      pv: 680,
+      amt: 1700,
+      cnt: 380
+    }
+  ];
+  
   const data2 = [
     {
       name: 'OK',
@@ -138,9 +191,9 @@ function App() {
       color: '#FDF5E6'
     }
   ]
-const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
+  const mang = ['http://192.168.32.65:6969', 'http://192.168.32.65:6969']
   const GetData = async () => {
-    const url = mang[Factory]+'/api/Statistical_All_iParking_System'
+    const url = mang[Factory] + '/api/Statistical_All_iParking_System'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -174,7 +227,7 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
           console.error('Max retry count reached. Unable to complete the request.')
         }
       })
-      .finally(() => {})
+      .finally(() => { })
   }
 
   const handleLogin = () => {
@@ -196,7 +249,7 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
     }
   }
   const GetDataWeek = async () => {
-    const url = mang[Factory]+'/api/Statistical_All_iParking_System_Week'
+    const url = mang[Factory] + '/api/Statistical_All_iParking_System_Week'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -223,10 +276,10 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
           console.error('Max retry count reached. Unable to complete the request.')
         }
       })
-      .finally(() => {})
+      .finally(() => { })
   }
   const GetDataMonth = async () => {
-    const url = mang[Factory]+'/api/Statistical_All_iParking_System_Week'
+    const url = mang[Factory] + '/api/Statistical_All_iParking_System_Week'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -255,7 +308,7 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
           console.error('Max retry count reached. Unable to complete the request.')
         }
       })
-      .finally(() => {})
+      .finally(() => { })
   }
 
   // useEffect(() => {
@@ -341,11 +394,11 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
         <div className='grid grid-rows-2  md:grid-rows-1 lg:grid-rows-1 grid-flow-col  justify-center gap-0 '>
           <div className='title   '>
             <button className='btn' onClick={handlelogout}>
-              DASHBROAD IPARKING{' '} 
-            </button><select className=' ' value={Factory} onChange={(e:any) => setFactory(e.target.value)}>
-              <option  value={0}>LHG</option>
-                <option value={1}>JZS</option>
-              </select>
+              DASHBROAD IPARKING{' '}
+            </button><select className=' ' value={Factory} onChange={(e: any) => setFactory(e.target.value)}>
+              <option value={0}>LHG</option>
+              <option value={1}>JZS</option>
+            </select>
           </div>
           <div className='title p-0 m-0 '>
             <DatePicker
@@ -394,7 +447,7 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
           </div>
         </div>
 
-        <div className='grid grid-rows-3 md:grid-rows-2 lg:grid-rows-1  grid-flow-col mt-12 gap-5 text-center'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4   mt-12 gap-5 text-center'>
           <div className='row_chart'>
             <div className='contentchart'>
               MONTH <br />
@@ -462,14 +515,95 @@ const mang=['http://192.168.32.65:6969','http://192.168.32.65:6969']
                     outerRadius={60}
                     fill='#fff000'
                     dataKey='value'
-                    // onMouseEnter={onPieEnter}
+                  // onMouseEnter={onPieEnter}
                   />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
-        </div>
+          <div className="row_chart">
+            <div className="contentchart">
+            <ResponsiveContainer width='100%' height='300px' aspect={6.0 / 3.255}>
+              <ComposedChart
+                width={700}
+                height={400}
+                data={datak}
+                margin={{
+                  top: 20,
+                  right: 80,
+                  bottom: 20,
+                  left: 20
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis
+                  dataKey="name"
+                  label={{ value: "Pages", position: "insideBottomRight", offset: 0 }}
+                  scale="band"
+                />
+                <YAxis label={{ value: "Index", angle: -90, position: "insideLeft" }} />
+                <Tooltip />
+                <Legend />
+                <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
 
+                <Bar dataKey="amt" barSize={20} fill="#413ea0" />
+                <Bar dataKey="pv" barSize={20} fill="#413ea0" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mt-10 gap-10 px-5 text-center">
+  <div className='cardMachine'>
+    <div className='cardName'>M2</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M3</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M4</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M5</div>
+    <div className="cardContent">
+      110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M6</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M7</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M8</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+  <div className='cardMachine'>
+    <div className='cardName'>M9</div>
+    <div className="cardContent">
+    110/1120
+    </div>
+  </div>
+</div>
         <div className='cuaphai'></div>
       </div>
     )
