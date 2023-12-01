@@ -5,16 +5,16 @@ import { useEffect, useState } from 'react'
 
 import './App.css'
 import DatePicker from 'react-datepicker'
+import { Portal } from "react-overlays";
 
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import axios from 'axios'
 import {
-  Area,
-  Bar,
+    Bar,
   BarChart,
   CartesianGrid,
-  ComposedChart,
+
   Legend,
   Line,
   LineChart,
@@ -63,7 +63,7 @@ const renderActiveShape = (props: any) => {
         outerRadius={outerRadius + 12}
         // fill={fill}
         fill={payload.color}
-      // fill="none"
+        // fill="none"
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill='none' />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
@@ -81,16 +81,16 @@ interface thongkexe {
   K_Chinh_Xac: string
   K_Doc_Duoc: string
 }
-
-
-
+interface thongketheomay {
+  MAIN: string
+  TBIN: string
+  TBOUT: string
+}
 
 const duoi30 = new Date()
 duoi30.setDate(duoi30.getDate() - 29)
 const currentDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
 function App() {
-
-
   const [activeIndex] = useState([0, 1, 2])
   const [Total_Car, setTotal_Car] = useState(0)
   // const [Total_Car_Read, setTotal_Car_Read] = useState(0);
@@ -105,60 +105,65 @@ function App() {
   const [Total_Car_Lock, setTotal_Car_Lock] = useState(0)
   const [Total_Car_Week, setTotal_Car_Week] = useState<thongkexe[]>([])
   const [Total_Car_Month, setTotal_Car_Month] = useState<thongkexe[]>([])
-  const [Factory, setFactory] = useState(0)
+  const [TBMachine, setTBMachine] = useState<thongketheomay[]>([])
+  
   const [startDate, setStartDate] = useState(currentDate)
   const User_ID = localStorage.Login ? true : false
+  
+ 
+  const IPserver = 'http://192.168.32.100:8095'
 
   const [checkLogin, setCheckLogin] = useState(User_ID)
   let retryCountday = 0
   let retryCountweek = 0
   let retryCountmonth = 0
+  let retryCountMachine = 0
   const retryDelay = 120000 //2 phút
-  const datak = [
-    {
-      name: "Page A",
-      uv: 590,
-      pv: 800,
-      amt: 1400,
-      cnt: 490
-    },
-    {
-      name: "Page B",
-      uv: 868,
-      pv: 967,
-      amt: 1506,
-      cnt: 590
-    },
-    {
-      name: "Page C",
-      uv: 1397,
-      pv: 1098,
-      amt: 989,
-      cnt: 350
-    },
-    {
-      name: "Page D",
-      uv: 1480,
-      pv: 1200,
-      amt: 1228,
-      cnt: 480
-    },
-    {
-      name: "Page E",
-      uv: 1520,
-      pv: 1108,
-      amt: 1100,
-      cnt: 460
-    },
-    {
-      name: "Page F",
-      uv: 1400,
-      pv: 680,
-      amt: 1700,
-      cnt: 380
-    }
-  ];
-  
+  // const datak = [
+  //   {
+  //     name: 'Page A',
+  //     uv: 590,
+  //     pv: 800,
+  //     amt: 1400,
+  //     cnt: 490
+  //   },
+  //   {
+  //     name: 'Page B',
+  //     uv: 868,
+  //     pv: 967,
+  //     amt: 1506,
+  //     cnt: 590
+  //   },
+  //   {
+  //     name: 'Page C',
+  //     uv: 1397,
+  //     pv: 1098,
+  //     amt: 989,
+  //     cnt: 350
+  //   },
+  //   {
+  //     name: 'Page D',
+  //     uv: 1480,
+  //     pv: 1200,
+  //     amt: 1228,
+  //     cnt: 480
+  //   },
+  //   {
+  //     name: 'Page E',
+  //     uv: 1520,
+  //     pv: 1108,
+  //     amt: 1100,
+  //     cnt: 460
+  //   },
+  //   {
+  //     name: 'Page F',
+  //     uv: 1400,
+  //     pv: 680,
+  //     amt: 1700,
+  //     cnt: 380
+  //   }
+  // ]
+
   const data2 = [
     {
       name: 'OK',
@@ -191,9 +196,22 @@ function App() {
       color: '#FDF5E6'
     }
   ]
-  const mang = ['http://192.168.32.65:6969', 'http://192.168.32.65:6969']
+  
+  const login = localStorage.getItem('Login');
+// const [Factory, setFactory] = useState<'LHG' | 'JZS' >(login)
+const [Factory, setFactory] = useState('');
+
+useEffect(() => {
+  // Log the value from localStorage for debugging
+  // console.log('localStorage.Login:', login);
+
+  // Set the initial state based on localStorage
+  setFactory(login === 'JZS' ? 'JZS' : 'LHG');
+}, [User_ID]);
+
+  // const mang = ['http://192.168.32.100:8095', 'http://192.168.32.100:8083']
   const GetData = async () => {
-    const url = mang[Factory] + '/api/Statistical_All_iParking_System'
+    const url = IPserver + '/api/Statistical_All_iParking_System'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -201,7 +219,8 @@ function App() {
     }
     const formattedDate = startDate.toISOString().split('T')[0]
     const obj = {
-      Date: formattedDate
+      Date: formattedDate,
+      Factory: Factory
     }
     await axios
       .post(url, obj, config)
@@ -227,7 +246,7 @@ function App() {
           console.error('Max retry count reached. Unable to complete the request.')
         }
       })
-      .finally(() => { })
+      .finally(() => {})
   }
 
   const handleLogin = () => {
@@ -249,7 +268,7 @@ function App() {
     }
   }
   const GetDataWeek = async () => {
-    const url = mang[Factory] + '/api/Statistical_All_iParking_System_Week'
+    const url = IPserver + '/api/Statistical_All_iParking_System_Week'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -259,7 +278,8 @@ function App() {
     const formattedDate = startDate.toISOString().split('T')[0]
     const obj = {
       Date: formattedDate,
-      days: '-6'
+      days: '-6',
+      Factory: Factory
     }
     await axios
       .post(url, obj, config)
@@ -276,10 +296,10 @@ function App() {
           console.error('Max retry count reached. Unable to complete the request.')
         }
       })
-      .finally(() => { })
+      .finally(() => {})
   }
   const GetDataMonth = async () => {
-    const url = mang[Factory] + '/api/Statistical_All_iParking_System_Week'
+    const url = IPserver + '/api/Statistical_All_iParking_System_Week'
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -290,7 +310,8 @@ function App() {
     const dateht = currentDate.toISOString().split('T')[0]
     const obj = {
       Date: dateht,
-      days: '-30'
+      days: '-30',
+      Factory: Factory
     }
     await axios
       .post(url, obj, config)
@@ -308,7 +329,38 @@ function App() {
           console.error('Max retry count reached. Unable to complete the request.')
         }
       })
-      .finally(() => { })
+      .finally(() => {})
+  }
+
+  const GetDataMachine = async () => {
+    const url = IPserver + '/api/Statistical_Average_Machines'
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const formattedDate = startDate.toISOString().split('T')[0]
+    const obj = {
+      Date: formattedDate,
+      Factory: Factory
+    }
+    await axios
+      .post(url, obj, config)
+      .then((response) => {
+        setTBMachine(response.data)
+      })
+      .catch((error) => {
+        console.error('Error in API request:', error)
+        if (retryCountMachine < 3) {
+          // Số lần thử lại tối đa
+          retryCountMachine++
+          setTimeout(GetDataMachine, retryDelay)
+        } else {
+          console.error('Max retry count reached. Unable to complete the request.')
+        }
+      })
+      .finally(() => {})
   }
 
   // useEffect(() => {
@@ -316,10 +368,11 @@ function App() {
   // },[checkLogin]);
 
   useEffect(() => {
-    // console.log(mang[Factory])
+    // console.log(IPserver)
     const fetchData = () => {
       GetData()
       GetDataWeek()
+      GetDataMachine()
       // GetDataMonth();
     }
 
@@ -340,7 +393,6 @@ function App() {
     // console.log(startDate);
 
     return () => clearInterval(intervalId)
-
   }, [startDate, Factory])
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -386,6 +438,11 @@ function App() {
       setCheckLogin(false)
     }
   }
+  const CalendarContainer = ({ children }:any) => {
+    const el = document.getElementById("calendar-portal");
+  
+    return <Portal container={el}>{children}</Portal>;
+  };
 
   if (checkLogin) {
     return (
@@ -395,9 +452,10 @@ function App() {
           <div className='title   '>
             <button className='btn' onClick={handlelogout}>
               DASHBROAD IPARKING{' '}
-            </button><select className=' ' value={Factory} onChange={(e: any) => setFactory(e.target.value)}>
-              <option value={0}>LHG</option>
-              <option value={1}>JZS</option>
+            </button>
+            <select className=' ' value={Factory} onChange={(e: any) => setFactory(e.target.value)}>
+              <option value={'LHG'}>LHG</option>
+              <option value={'JZS'}>JZS</option>
             </select>
           </div>
           <div className='title p-0 m-0 '>
@@ -410,6 +468,9 @@ function App() {
               onChange={(date: any) => {
                 setStartDate(date)
               }}
+              popperPlacement="top-start"
+              placeholderText="Choose a start date"
+              popperContainer={CalendarContainer}
             />
           </div>
         </div>
@@ -447,7 +508,8 @@ function App() {
           </div>
         </div>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4   mt-12 gap-5 text-center'>
+        {/* <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4   mt-12 gap-5 text-center bieudo'> */}
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3   mt-12 gap-5 text-center bieudo'>
           <div className='row_chart'>
             <div className='contentchart'>
               MONTH <br />
@@ -515,95 +577,115 @@ function App() {
                     outerRadius={60}
                     fill='#fff000'
                     dataKey='value'
-                  // onMouseEnter={onPieEnter}
+                    // onMouseEnter={onPieEnter}
                   />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="row_chart">
-            <div className="contentchart">
-            <ResponsiveContainer width='100%' height='300px' aspect={6.0 / 3.255}>
-              <ComposedChart
-                width={700}
-                height={400}
-                data={datak}
-                margin={{
-                  top: 20,
-                  right: 80,
-                  bottom: 20,
-                  left: 20
-                }}
-              >
-                <CartesianGrid stroke="#f5f5f5" />
-                <XAxis
-                  dataKey="name"
-                  label={{ value: "Pages", position: "insideBottomRight", offset: 0 }}
-                  scale="band"
-                />
-                <YAxis label={{ value: "Index", angle: -90, position: "insideLeft" }} />
-                <Tooltip />
-                <Legend />
-                <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
+          {/* <div className='row_chart'>
+            <div className='contentchart'>
+              <ResponsiveContainer width='100%' height='300px' aspect={6.0 / 3.255}>
+                <ComposedChart
+                  width={700}
+                  height={400}
+                  data={datak}
+                  margin={{
+                    top: 20,
+                    right: 80,
+                    bottom: 20,
+                    left: 20
+                  }}
+                >
+                  <CartesianGrid stroke='#f5f5f5' />
+                  <XAxis
+                    dataKey='name'
+                    label={{ value: 'Pages', position: 'insideBottomRight', offset: 0 }}
+                    scale='band'
+                  />
+                  <YAxis label={{ value: 'Index', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip />
+                  <Legend />
+                  <Area type='monotone' dataKey='amt' fill='#8884d8' stroke='#8884d8' />
 
-                <Bar dataKey="amt" barSize={20} fill="#413ea0" />
-                <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
-              </ComposedChart>
+                  <Bar dataKey='amt' barSize={20} fill='#413ea0' />
+                  <Bar dataKey='pv' barSize={20} fill='#413ea0' />
+                  <Line type='monotone' dataKey='uv' stroke='#ff7300' />
+                </ComposedChart>
               </ResponsiveContainer>
+            </div>
+          </div> */}
+        </div>
+        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mt-10 gap-10 px-5 text-center'>
+          {/* {TBMachine.map((item:any, index:number) => {
+            return (
+              <div key={index} className='cardMachine'>
+                <div className='cardName'>{item.MAIN !=='' ? 'M'+ item.MAIN:'M0' }</div>
+                <div className='cardContent'>
+                  {item.TBIN} <br /> {item.TBOUT}
+                </div>
+              </div>
+            )
+          })} */}
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[0]?.MAIN !=='' ? 'M' + TBMachine[0]?.MAIN : 'M0'}</div>
+
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[0]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[0]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[1]?.MAIN   ? 'M' + TBMachine[1]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[1]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[1]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[2]?.MAIN   ? 'M' + TBMachine[2]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[2]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[2]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[3]?.MAIN   ? 'M' + TBMachine[3]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[3]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[3]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[4]?.MAIN   ? 'M' + TBMachine[4]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[4]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[4]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[5]?.MAIN   ? 'M' + TBMachine[5]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[5]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[5]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[6]?.MAIN   ? 'M' + TBMachine[6]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[6]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[6]?.TBOUT : ''}</p>
+            </div>
+          </div>
+          <div className='cardMachine'>
+            <div className='cardName'>{TBMachine[7]?.MAIN   ? 'M' + TBMachine[7]?.MAIN : ''}</div>
+            <div className='cardContent'>
+              <p>{TBMachine ? TBMachine[7]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[7]?.TBOUT : ''}</p>
             </div>
           </div>
         </div>
-<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mt-10 gap-10 px-5 text-center">
-  <div className='cardMachine'>
-    <div className='cardName'>M2</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M3</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M4</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M5</div>
-    <div className="cardContent">
-      110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M6</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M7</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M8</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-  <div className='cardMachine'>
-    <div className='cardName'>M9</div>
-    <div className="cardContent">
-    110/1120
-    </div>
-  </div>
-</div>
+
         <div className='cuaphai'></div>
       </div>
     )

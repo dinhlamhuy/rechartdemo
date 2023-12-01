@@ -147,10 +147,12 @@ option::checked {
   text-align: center !important;
 }
 
-.react-datepicker__month-container,
-.react-datepicker-popper,
-.react-datepicker {
-  z-index: 999999999 !important;
+
+.react-datepicker,.react-datepicker__tab-loop, .react-datepicker-popper {
+
+  position: relative;
+
+  z-index: 10000;
 
 
 
@@ -168,69 +170,6 @@ option::checked {
   opacity: 1;
   animation: show 8s forwards;
 }
-
-/* .card_water {
-  position: relative;
-  height: 120px;
-  max-width: 120px;
-  background: transparent;
-  box-shadow:
-      inset 20px 20px 20px rgba(0, 0, 0, .05),
-      5px 25px 20px rgba(0, 0, 0, .05),
-      5px 20px 30px rgba(0, 0, 0, .05),
-      inset -20px -20px 25px rgba(255, 255, 255, .9);
-  border-radius: 61% 39% 52% 48% / 44% 59% 41% 56%;
-  transition: .5s ease-in-out;
-
-}
-
-.card_water:hover {
-  border-radius: 50%;
-}
-
-.card_water::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  right: 35px;
-  width: 25px;
-  height: 25px;
-  background: #fff;
-  border-radius: 50%;
-  opacity: .7;
-}
-
-.card_water::after {
-  content: '';
-  position: absolute;
-  top: 90px;
-  left: 85px;
-  width: 10px;
-  height: 10px;
-  background: #fff;
-  border-radius: 50%;
-  opacity: .9;
-}
-
-.name_card {
-  position: absolute;
-  font-size: 15px;
-  font-weight: 600;
-  align-items: center;
-  flex-direction: column;
-  padding: 30px;
-  top: -15px;
-
-}
-
-.value_card {
-  position: absolute;
-  font-size: 30px;
-  font-weight: 700;
-  align-items: center;
-  top: 50%;
-  left: 30%;
-} */
 
 .ring {
   position: relative;
@@ -306,31 +245,36 @@ option::checked {
 
 .row_chart {
   position: relative;
-  width: 92%;
+  width: 93%;
   margin: auto;
   border-radius: 3%;
   color: #69ca62;
   overflow: hidden;
   opacity: 1;
+  z-index: 1;
   animation: show 8s forwards;
-  z-index: -1;
+
 }
 
 .row_chart::before,
 .row_chart::after {
   content: "";
-  /* margin: 3%; */
-
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  align-items: center;
   width: 150%;
-  height: 50%;
-  left: -10%;
-  right: -10%;
-  top: 10%;
-  /* border: 1px solid red; */
+  height: 60%;
+  left:50%;
+  top:50%;
+  /* left: -10%;
+  right: -10%; */
+  /* transform: translate(-50%, -50%); */
+  transform: translate(-50%, -50%) rotate(0deg);
+  /* top: 10%; */
   background-color: #fff000;
-  /* border-radius: 3% */
   animation: rotateBorder 5s linear infinite;
-  z-index: -99999;
+  z-index: -1;
 }
 
 .row_chart::before {
@@ -338,30 +282,24 @@ option::checked {
 
 }
 
-row_chart::after {
-  background: #000000;
-  z-index: 9999 !important;
+.row_chart::after {
+  background: #fff000;
+  z-index: -1 !important;
+}
+.bieudo{
+  position: relative;
+  /* display: block; */
+
+  /* z-index: 10; */
 }
 
 @keyframes rotateBorder {
   0% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(90deg);
-  }
-
-  50% {
-    transform: rotate(180deg);
-  }
-
-  75% {
-    transform: rotate(270deg);
+    transform:translate(-50%, -50%) rotate(0deg);
   }
 
   100% {
-    transform: rotate(360deg);
+    transform:translate(-50%, -50%) rotate(360deg);
   }
 }
 
@@ -372,6 +310,7 @@ row_chart::after {
   background: #000000;
   border: 1px solid green;
   border-radius: 3%;
+  z-index: -1000;
 
 }
 
@@ -443,22 +382,35 @@ row_chart::after {
   align-items: center;
   display: flex;
   font-weight: 800;
-  font-size: 25px;
+  font-size: 18px;
   letter-spacing: 3px;
 
 }
 
 .cardContent {
   color: #fff000;
-  display: flex;
+  display: inline-flexbox;
   justify-content: center;
   text-align: center;
   align-items: center;
   /* border: 2px solid #fff000; */
+  padding-top: 10%;
   height: 70%;
-  font-size: 30px;
+  width: 100%;
+  
+  font-size: 23px;
   font-weight: 800;
   letter-spacing: 2px;
+  /* line-: 200%; */
+  
   text-shadow: 0 0 10px 2px red;
 
+}
+.cardContent p:nth-child(1){
+  color:fff000;
+  margin-bottom:5%;
+}
+.cardContent p:nth-child(2){
+  color:orangered;
+  margin-bottom:5%;
 }

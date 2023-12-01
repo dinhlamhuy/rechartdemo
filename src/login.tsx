@@ -12,6 +12,7 @@ const Login: FC<LoginProps> = ({ onLogin }) => {
 
   const [pass, setPass] = useState('')
   const [Mess, setMess] = useState('')
+  
   const formatDateString = () => {
     const formattedDate = new Date()
 
@@ -23,7 +24,7 @@ const Login: FC<LoginProps> = ({ onLogin }) => {
     return year + month + day
   }
 
-  const userarr = ['54314', '50587', '49051', '12525', 'LHG']
+  const userarr = ['54314', '50587', '49051', '12525', 'JZS', 'LHG']
   const handleLogin = () => {
     const isUserNameInArray = userarr.some((user) => userName.includes(user))
     if (isUserNameInArray && (formatDateString() === pass || pass==='123') ) {
