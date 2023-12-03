@@ -616,7 +616,7 @@ useEffect(() => {
             </div>
           </div> */}
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mt-10 gap-10 px-5 text-center'>
+        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mt-10 gap-3 px-5 text-center'>
           {/* {TBMachine.map((item:any, index:number) => {
             return (
               <div key={index} className='cardMachine'>
@@ -678,10 +678,10 @@ useEffect(() => {
             </div>
           </div>
           <div className='cardMachine'>
-            <div className='cardName'>{TBMachine[7]?.MAIN   ? 'M' + TBMachine[7]?.MAIN : ''}</div>
+            <div className='cardName'>{TBMachine[7]?.MAIN   ? 'M' + TBMachine[7]?.MAIN : ''}M9</div>
             <div className='cardContent'>
-              <p>{TBMachine ? TBMachine[7]?.TBIN : ''}</p>
-              <p>{TBMachine ? TBMachine[7]?.TBOUT : ''}</p>
+              <p>{TBMachine ? TBMachine[7]?.TBIN : ''}I 1102/2039</p>
+              <p>{TBMachine ? TBMachine[7]?.TBOUT : ''}O 1102/2039</p>
             </div>
           </div>
         </div>

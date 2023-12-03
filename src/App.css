@@ -320,18 +320,24 @@ option::checked {
 
 .cardMachine {
   border: 2px solid #fff000;
-  height: 220px;
-  border-radius: 20% 0 0 0;
+  min-height: 150px;
+  height: 180px;
+
+  max-height: 220px;
+  border-radius: 20% 10% 10% 10%;
   padding-top: 0;
   /* box-shadow: 0 0 10px 2px #fff000; */
+  position: relative;
+  overflow: hidden;
   animation: show 8s forwards;
+  /* overflow-y: auto; */
 }
 
 .cardMachine:nth-child(1),
 .cardMachine:nth-child(3),
 .cardMachine:nth-child(5),
 .cardMachine:nth-child(7) {
-  border: 3px solid orangered;
+  border: 4px solid orangered;
 
   box-shadow: 0 0 20px 3px orangered;
 }
@@ -340,7 +346,7 @@ option::checked {
 .cardMachine:nth-child(4),
 .cardMachine:nth-child(6),
 .cardMachine:nth-child(8) {
-  border: 2px solid #fff000;
+  border: 4px solid #fff000;
 
   box-shadow: 0 0 10px 2px #fff000;
 }
@@ -370,20 +376,24 @@ option::checked {
 }
 
 .cardName {
-  /* border-right: 2px solid #fff000; */
-  /* border-bottom: 2px solid #fff000; */
-  /* color: #fff000; */
+
   width: 40%;
   height: 30%;
-  border-radius: 50% 0 20% 0;
-  margin-top: 0;
+/* border-top-left-radius:50% ; */
+  border-bottom-right-radius: 40%;
+  margin-top: -4px;
+  margin-left: -4px;
   justify-content: center;
+  border: 4px solid;
   text-align: center;
   align-items: center;
   display: flex;
   font-weight: 800;
   font-size: 18px;
   letter-spacing: 3px;
+  position: relative;
+  overflow: hidden;
+
 
 }
 
@@ -397,12 +407,11 @@ option::checked {
   padding-top: 10%;
   height: 70%;
   width: 100%;
-  
-  font-size: 23px;
+  position: relative;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: 2px;
-  /* line-: 200%; */
-  
+
   text-shadow: 0 0 10px 2px red;
 
 }
@@ -412,5 +421,5 @@ option::checked {
 }
 .cardContent p:nth-child(2){
   color:orangered;
-  margin-bottom:5%;
+  /* margin-bottom:5%; */
 }

@@ -50,8 +50,8 @@ const Login: FC<LoginProps> = ({ onLogin }) => {
       <div className={`contentLogin ${isAnimationVisible ? 'animate' : ''}`}>
         <div className={`SVGIMG ${isAnimationVisible ? 'animate' : ''}`}>
           <img src={ufo} alt='SVG Image' className={` ${isAnimationVisible ? 'animate' : ''}`} />
-          <div className={` mt-6 formlogin ${isAnimationVisible ? 'animate' : ''}`}>
-            <div className='gird grid-rows-1 '>
+          <div className={`  mt-6 formlogin ${isAnimationVisible ? 'animate' : ''}`}>
+            <div className=' gird grid-rows-1  '>
               <div className='titleLogin'>LOGIN</div>
             </div>
 
