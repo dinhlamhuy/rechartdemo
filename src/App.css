@@ -288,9 +288,6 @@ option::checked {
 }
 .bieudo{
   position: relative;
-  /* display: block; */
-
-  /* z-index: 10; */
 }
 
 @keyframes rotateBorder {
@@ -336,7 +333,8 @@ option::checked {
 .cardMachine:nth-child(1),
 .cardMachine:nth-child(3),
 .cardMachine:nth-child(5),
-.cardMachine:nth-child(7) {
+.cardMachine:nth-child(7), 
+.cardMachine:nth-child(9)  {
   border: 4px solid orangered;
 
   box-shadow: 0 0 20px 3px orangered;
@@ -345,7 +343,8 @@ option::checked {
 .cardMachine:nth-child(2),
 .cardMachine:nth-child(4),
 .cardMachine:nth-child(6),
-.cardMachine:nth-child(8) {
+.cardMachine:nth-child(8),
+.cardMachine:nth-child(10)  {
   border: 4px solid #fff000;
 
   box-shadow: 0 0 10px 2px #fff000;
@@ -356,7 +355,9 @@ option::checked {
 .cardMachine:nth-child(1) .cardName,
 .cardMachine:nth-child(3) .cardName,
 .cardMachine:nth-child(5) .cardName,
-.cardMachine:nth-child(7) .cardName {
+.cardMachine:nth-child(7) .cardName ,
+.cardMachine:nth-child(9) .cardName 
+{
   border-right: 3px solid orangered;
   border-bottom: 3px solid orangered;
   box-shadow: 0 0 20px 3px orangered;
@@ -367,7 +368,8 @@ option::checked {
 .cardMachine:nth-child(2) .cardName,
 .cardMachine:nth-child(4) .cardName,
 .cardMachine:nth-child(6) .cardName,
-.cardMachine:nth-child(8) .cardName {
+.cardMachine:nth-child(8) .cardName, 
+.cardMachine:nth-child(10) .cardName{
   border-right: 2px solid #fff000;
   border-bottom: 2px solid #fff000;
   box-shadow: 0 0 10px 2px #fff000;

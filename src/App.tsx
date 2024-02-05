@@ -5,16 +5,15 @@ import { useEffect, useState } from 'react'
 
 import './App.css'
 import DatePicker from 'react-datepicker'
-import { Portal } from "react-overlays";
+import { Portal } from 'react-overlays'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import { format } from 'date-fns'
 import axios from 'axios'
 import {
-    Bar,
+  Bar,
   BarChart,
   CartesianGrid,
-
   Legend,
   Line,
   LineChart,
@@ -106,12 +105,11 @@ function App() {
   const [Total_Car_Week, setTotal_Car_Week] = useState<thongkexe[]>([])
   const [Total_Car_Month, setTotal_Car_Month] = useState<thongkexe[]>([])
   const [TBMachine, setTBMachine] = useState<thongketheomay[]>([])
-  
+
   const [startDate, setStartDate] = useState(currentDate)
   const User_ID = localStorage.Login ? true : false
-  
- 
-  const IPserver = 'http://192.168.32.100:8095'
+
+  const IPserver = 'http://192.168.32.96:6969'
 
   const [checkLogin, setCheckLogin] = useState(User_ID)
   let retryCountday = 0
@@ -196,18 +194,18 @@ function App() {
       color: '#FDF5E6'
     }
   ]
-  
-  const login = localStorage.getItem('Login');
-// const [Factory, setFactory] = useState<'LHG' | 'JZS' >(login)
-const [Factory, setFactory] = useState('');
 
-useEffect(() => {
-  // Log the value from localStorage for debugging
-  // console.log('localStorage.Login:', login);
+  const login = localStorage.getItem('Login')
+  // const [Factory, setFactory] = useState<'LHG' | 'JZS' >(login)
+  const [Factory, setFactory] = useState('')
 
-  // Set the initial state based on localStorage
-  setFactory(login === 'JZS' ? 'JZS' : 'LHG');
-}, [User_ID]);
+  useEffect(() => {
+    // Log the value from localStorage for debugging
+    // console.log('localStorage.Login:', login);
+
+    // Set the initial state based on localStorage
+    setFactory(login === 'JZS' ? 'JZS' : 'LHG')
+  }, [User_ID])
 
   // const mang = ['http://192.168.32.100:8095', 'http://192.168.32.100:8083']
   const GetData = async () => {
@@ -438,11 +436,11 @@ useEffect(() => {
       setCheckLogin(false)
     }
   }
-  const CalendarContainer = ({ children }:any) => {
-    const el = document.getElementById("calendar-portal");
-  
-    return <Portal container={el}>{children}</Portal>;
-  };
+  const CalendarContainer = ({ children }: any) => {
+    const el = document.getElementById('calendar-portal')
+
+    return <Portal container={el}>{children}</Portal>
+  }
 
   if (checkLogin) {
     return (
@@ -468,8 +466,8 @@ useEffect(() => {
               onChange={(date: any) => {
                 setStartDate(date)
               }}
-              popperPlacement="top-start"
-              placeholderText="Choose a start date"
+              popperPlacement='top-start'
+              placeholderText='Choose a start date'
               popperContainer={CalendarContainer}
             />
           </div>
@@ -616,18 +614,20 @@ useEffect(() => {
             </div>
           </div> */}
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mt-10 gap-3 px-5 text-center'>
-          {/* {TBMachine.map((item:any, index:number) => {
-            return (
-              <div key={index} className='cardMachine'>
-                <div className='cardName'>{item.MAIN !=='' ? 'M'+ item.MAIN:'M0' }</div>
-                <div className='cardContent'>
-                  {item.TBIN} <br /> {item.TBOUT}
+        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 mt-10 gap-3 px-5 text-center'>
+          {TBMachine.map((item: any, index: number) => {
+            if (item.MAIN != '123') {
+              return (
+                <div key={index} className='cardMachine'>
+                  <div className='cardName '>M{item.MAIN}</div>
+                  <div className='cardContent'>
+                    {item.TBIN} <br /> {item.TBOUT}
+                  </div>
                 </div>
-              </div>
-            )
-          })} */}
-          <div className='cardMachine'>
+              )
+            }
+          })}
+          {/*  <div className='cardMachine'>
             <div className='cardName'>{TBMachine[0]?.MAIN !=='' ? 'M' + TBMachine[0]?.MAIN : 'M0'}</div>
 
             <div className='cardContent'>
@@ -678,12 +678,15 @@ useEffect(() => {
             </div>
           </div>
           <div className='cardMachine'>
-            <div className='cardName'>{TBMachine[7]?.MAIN   ? 'M' + TBMachine[7]?.MAIN : ''}M9</div>
+            <div className='cardName'>{TBMachine[7]?.MAIN   ? 'M' + TBMachine[7]?.MAIN : ''}</div>
             <div className='cardContent'>
-              <p>{TBMachine ? TBMachine[7]?.TBIN : ''}I 1102/2039</p>
-              <p>{TBMachine ? TBMachine[7]?.TBOUT : ''}O 1102/2039</p>
+              <p>{TBMachine ? TBMachine[7]?.TBIN : ''}</p>
+              <p>{TBMachine ? TBMachine[7]?.TBOUT : ''}</p>
             </div>
           </div>
+
+
+          */}
         </div>
 
         <div className='cuaphai'></div>
