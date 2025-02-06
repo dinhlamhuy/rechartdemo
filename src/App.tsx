@@ -109,7 +109,7 @@ function App() {
   const [startDate, setStartDate] = useState(currentDate)
   const User_ID = localStorage.Login ? true : false
 
-  const IPserver = 'http://192.168.32.96:6969'
+  const IPserver = 'http://192.168.30.231:6969'
 
   const [checkLogin, setCheckLogin] = useState(User_ID)
   let retryCountday = 0
@@ -394,13 +394,16 @@ function App() {
   }, [startDate, Factory])
 
   const CustomTooltip = ({ active, payload }: any) => {
+    console.log(payload)
     if (active && payload && payload.length) {
       return (
         <div className='custom-tooltip' style={{ backgroundColor: 'rgba(0, 0, 0, 0.603)' }}>
           <p className='intro'>{`${payload[0].payload.name}`}</p>
+          {/* <p className='label' style={{ color: `${payload[0].fill}` }}>{`${payload[0].name} : ${payload[0].value}`}</p> */}
           <p className='label' style={{ color: `${payload[0].fill}` }}>{`${payload[0].name} : ${payload[0].value}`}</p>
           <p className='label' style={{ color: `${payload[1].fill}` }}>{`${payload[1].name} : ${payload[1].value}`}</p>
           <p className='label' style={{ color: `${payload[2].fill}` }}>{`${payload[2].name} : ${payload[2].value}`}</p>
+          {/* <p className='label' style={{ color: `${payload[3].fill}` }}>{`${payload[3].name} : ${payload[3].value}`}</p> */}
 
           {/* <p className="intro"></p>
           <p className="desc">Anything you want can be displayed here.</p> */}
@@ -411,7 +414,12 @@ function App() {
     return null
   }
 
-  const datamonth = Total_Car_Month.map(
+  const datamonth = Total_Car_Month.sort((a:any, b:any) => {
+    // Assuming 'Thu' is a date string in the format "YYYY-MM-DD"
+    const dateA:any  = new Date(a.Ngay);
+    const dateB:any = new Date(b.Ngay);
+    return dateA - dateB;
+}).map(
     (item: { Ngay: string; Chinh_Xac: string; K_Chinh_Xac: string; K_Doc_Duoc: string }) => ({
       name: item.Ngay,
       CORRECT: parseInt(item.Chinh_Xac),
@@ -420,14 +428,22 @@ function App() {
     })
   )
 
-  const data = Total_Car_Week.map(
-    (item: { Thu: string; Chinh_Xac: string; K_Chinh_Xac: string; K_Doc_Duoc: string }) => ({
+  const data = Total_Car_Week.sort((a:any, b:any) => {
+    // Assuming 'Thu' is a date string in the format "YYYY-MM-DD"
+    const dateA:any  = new Date(a.Ngay);
+    const dateB:any = new Date(b.Ngay);
+    return dateA - dateB;
+}).map(
+    (item: { Thu: string;Ngay: string; Chinh_Xac: string; K_Chinh_Xac: string; K_Doc_Duoc: string }) => ({
       name: item.Thu,
+      DATE: item.Ngay,
       CORRECT: parseInt(item.Chinh_Xac),
       INCORRECT: parseInt(item.K_Chinh_Xac),
       UNREADABLE: parseInt(item.K_Doc_Duoc)
     })
-  )
+);
+
+
 
   const handlelogout = () => {
     const isConfirmed = window.confirm('Are you sure you want to log out?')
@@ -616,7 +632,7 @@ function App() {
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 mt-10 gap-3 px-5 text-center'>
           {TBMachine.map((item: any, index: number) => {
-            if (item.MAIN != '123') {
+            if (item.MAIN != '10' && item.MAIN != '9' && item.MAIN != '123') {
               return (
                 <div key={index} className='cardMachine'>
                   <div className='cardName '>M{item.MAIN}</div>

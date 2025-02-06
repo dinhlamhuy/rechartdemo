@@ -127,6 +127,28 @@ option::checked {
   }
 }
 
+
+
+::-webkit-scrollbar {
+  width: 7px;
+  border-radius:24px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #181717; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #530202; 
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a50707; 
+}
 .react-datepicker__input-container input,
 .react-datepicker-wrapper {
   background-color: transparent !important;
